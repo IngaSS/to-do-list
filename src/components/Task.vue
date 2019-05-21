@@ -31,10 +31,13 @@ export default {
 }
 
 .taskArea {
-  width: 100px;
   text-align: justify;
   word-break: break-word;
   margin-top: 30px;
+  text-align: justify;
+  word-break: break-word;
+  margin-top: 30px;
+  margin: 10px 5px;
 }
 
 .buttons {
