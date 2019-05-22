@@ -1,8 +1,15 @@
 <template>
   <v-app class="mainArea">
     <v-card class="my-card">
-      <v-text-field placeholder="Добавить задание" class="text-input" type="text" v-model="name" single-line
-              outline clearable></v-text-field>
+      <v-text-field
+        placeholder="Добавить задание"
+        class="text-input"
+        type="text"
+        v-model="name"
+        single-line
+        outline
+        clearable
+      ></v-text-field>
       <v-btn @click="addTask">Добавить</v-btn>
     </v-card>
     <TaskList :tasks="this.tasks" :dropTask="this.dropTask"></TaskList>
@@ -27,11 +34,27 @@ export default {
     addTask() {
       if (this.name != null && !this.tasks.includes(this.name)) {
         this.tasks.push(this.name);
+        this.saveTasks();
       }
     },
 
     dropTask(task) {
       this.tasks.splice(this.tasks.indexOf(task), 1);
+      this.saveTasks();
+    },
+
+    saveTasks() {
+      const parsed = JSON.stringify(this.tasks);
+      localStorage.setItem("tasks", parsed);
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("tasks")) {
+      try {
+        this.tasks = JSON.parse(localStorage.getItem("tasks"));
+      } catch (e) {
+        localStorage.removeItem("tasks");
+      }
     }
   }
 };
